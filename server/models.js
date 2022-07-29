@@ -1,3 +1,0 @@
-/* set CRUD functions in this file
-  return the query searches for each individual controller function
-*/

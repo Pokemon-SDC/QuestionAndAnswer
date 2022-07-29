@@ -1,6 +1,8 @@
+/* eslint-disable import/extensions */
 const express = require('express');
-// const controller = require('./controller.js');
+const controller = require('./controller.js');
 
+const port = 3000;
 const app = express();
 
 // app.use(express.static('/../client/dist'));
@@ -10,18 +12,20 @@ app.use(express.json());
 // function from the controller file
 
 // POST routes
-app.post('/question', function (req, res) {
-  res.send(console.log('able to post information'));
-});
+app.post('/question', controller.addQuestion);
+app.post('/answer', controller.addAnswer);
 
-// GET route
-app.get('/question', function (req, res) {
-  res.status(200)
-  res.send (console.log('getting question'))
-});
+// GET routes
+app.get('/question', controller.getQuestions);
+app.get('/answer', controller.getAnswers);
+app.get('/photo', controller.getPhotos);
 
-const port = 3000;
+// PUT routes
+app.put('/question', controller.helpfulQuestion);
+app.put('/question', controller.reportQuestion);
+app.put('/answer', controller.helpfulAnswer);
+app.put('/answer', controller.reportAnswer);
 
-app.listen(port, function () {
+app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
