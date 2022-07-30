@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 const express = require('express');
+const bodyparser = require('body-parser');
 const controller = require('./controller.js');
 
 const port = 3000;
@@ -7,6 +8,8 @@ const app = express();
 
 // app.use(express.static('/../client/dist'));
 app.use(express.json());
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
 
 // list all the HTTP requests here, replace callback function with a
 // function from the controller file
