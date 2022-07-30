@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/extensions */
 const pool = require('../pool.js');
 
@@ -6,10 +7,23 @@ const pool = require('../pool.js');
 
   getQuestion:
     query = (SELECT * from question WHERE product_id = )
-
 */
 
 module.exports = {
+  getAnswers(question_id, page, count) {
+    return new Promise((resolve, reject) => {
+      const pageNumber = page || 1;
+      const countNumber = count || 5;
+
+      let data = {
+        question: question_id,
+        page: pageNumber,
+        count: countNumber,
+        result: [],
+      };
+    });
+  },
+
   addQuestion(product_id, body, name, email) {
     return new Promise((resolve, reject) => {
       const dateWritten = Math.floor(new Date().getTime());
@@ -20,15 +34,15 @@ module.exports = {
           reject(err);
         }
         resolve(results);
-      })
-    })
+      });
+    });
   },
 
   addAnswer(question_id, body, name, email) {
     return new Promise((resolve, reject) => {
       const dateWritten = Math.floor(new Date().getTime());
       const queryStatement = 'INSERT INTO answer(question_id, body, date_written, answerer_name, answerer_email, reported, helpful) VALUES (?, ?, ?, ?, ?, ?, ?)';
-      const queryArguments = [question_id, body, dateWritten, name, email, 0, 0]
+      const queryArguments = [question_id, body, dateWritten, name, email, 0, 0];
       pool.query(queryStatement, queryArguments, (err, results) => {
         if (err) {
           reject(err);

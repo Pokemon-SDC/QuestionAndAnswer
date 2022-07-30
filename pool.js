@@ -17,4 +17,4 @@ const pool = new Pool(credentials);
 //   console.log('connected to pool!');
 // });
 
-module.export.pool = pool;
+module.exports = pool;

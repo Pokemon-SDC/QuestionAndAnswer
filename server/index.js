@@ -12,19 +12,19 @@ app.use(express.json());
 // function from the controller file
 
 // POST routes
-app.post('/question', controller.addQuestion);
-app.post('/answer', controller.addAnswer);
+app.post('/qa/questions', controller.addQuestion);
+app.post('/qa/questions/:question_id/answers', controller.addAnswer);
 
 // GET routes
-app.get('/question', controller.getQuestions);
-app.get('/answer', controller.getAnswers);
-app.get('/photo', controller.getPhotos);
+app.get('/qa/questions', controller.getQuestions);
+app.get('/qa/questions/:question_id/answers', controller.getAnswers);
+// app.get('/photo', controller.getPhotos);
 
 // PUT routes
-app.put('/question', controller.helpfulQuestion);
-app.put('/question', controller.reportQuestion);
-app.put('/answer', controller.helpfulAnswer);
-app.put('/answer', controller.reportAnswer);
+app.put('/qa/questions/:question_id/helpful', controller.helpfulQuestion);
+app.put('/qa/questions/:question_id/report', controller.reportQuestion);
+app.put('/qa/answers/:answer_id/helpful', controller.helpfulAnswer);
+app.put('/qa/answers/:answer_id/report', controller.reportAnswer);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
