@@ -2,13 +2,6 @@
 /* eslint-disable import/extensions */
 const pool = require('../pool.js');
 
-/* set CRUD functions in this file
-  return the query searches for each individual controller function
-
-  getQuestion:
-    query = (SELECT * from question WHERE product_id = )
-*/
-
 module.exports = {
   getQuestions(product_id, page, count) {
     return new Promise((resolve, reject) => {
