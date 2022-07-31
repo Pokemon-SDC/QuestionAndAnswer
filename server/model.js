@@ -21,7 +21,7 @@ module.exports = {
       FROM answer WHERE answer.question_id = question.id)
       AS answers
       FROM question
-      WHERE question.product_id = ${productID} AND question.reported = false
+      WHERE question.product_id = ${productID} AND question.reported = false;
       ORDER BY question.question_helpfulness
       DESC LIMIT ${countNumber}
       OFFSET ${offset};`;
