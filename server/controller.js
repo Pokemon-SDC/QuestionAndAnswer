@@ -5,7 +5,7 @@ const model = require('./model.js');
 
 module.exports = {
   getQuestions(req, res) {
-    const { product_id, page, count } = req.params;
+    const { product_id, page, count } = req.query;
     model.getQuestions(product_id, page, count)
       .then((results) => {
         res.status(200);

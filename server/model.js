@@ -21,16 +21,13 @@ module.exports = {
       FROM answer WHERE answer.question_id = question.id)
       AS answers
       FROM question
-      WHERE question.product_id = ${productID} AND question.reported = false;
-      ORDER BY question.question_helpfulness
-      DESC LIMIT ${countNumber}
-      OFFSET ${offset};`;
+      WHERE question.product_id = ${productID} AND question.reported = false`;
 
-      pool.query(queryStatement, (err, results) => {
+      pool.query(queryStatement, (err, rowData) => {
         if (err) {
           reject(err);
         }
-        data.results = results.rows;
+        data.results = rowData.rows;
         resolve(data);
       });
     });
@@ -50,12 +47,12 @@ module.exports = {
         result: [],
       };
 
-      const queryStatement = `SELECT answer.answer_id, answer.body, answer.date_written, answer.answerer_name, answer.helpful, (SELECT (array_agg(json_build_object('id', photo.id, 'url', photo.photo_url))) FROM photo WHERE answer.answer_id = photo.answer_id) AS photos FROM answer WHERE answer.reported = false AND answer.question_id = ${questionID}, ORDER BY DESC LIMIT ${countNumber} OFFSET ${offset};`;
-      pool.query(queryStatement, (err, results) => {
+      const queryStatement = `SELECT answer.answer_id, answer.body, answer.date_written, answer.answerer_name, answer.helpful, (SELECT (array_agg(json_build_object('id', photo.id, 'url', photo.photo_url))) FROM photo WHERE answer.answer_id = photo.answer_id) AS photos FROM answer WHERE answer.reported = false AND answer.question_id = ${questionID};`;
+      pool.query(queryStatement, (err, rowData) => {
         if (err) {
           reject(err);
         }
-        data.results = results.rows;
+        data.results = rowData.rows;
         resolve(data);
       });
     });
@@ -79,7 +76,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const dateWritten = Math.floor(new Date().getTime());
       const queryStatement = 'INSERT INTO answer(question_id, body, date_written, answerer_name, answerer_email, reported, helpful) VALUES (?, ?, ?, ?, ?, ?, ?);';
-      const queryArguments = [question_id, body, dateWritten, name, email, 0, 0];
+      const queryArguments = [question_id, body, dateWritten, name, email, false, 0];
       pool.query(queryStatement, queryArguments, (err, results) => {
         if (err) {
           reject(err);
@@ -120,6 +117,7 @@ module.exports = {
         if (err) {
           reject(err);
         }
+
         resolve(results);
       });
     });
