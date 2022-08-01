@@ -44,7 +44,7 @@ module.exports = {
         question: question_id,
         page: pageNumber,
         count: countNumber,
-        result: [],
+        results: [],
       };
 
       const queryStatement = `SELECT answer.answer_id, answer.body, answer.date_written, answer.answerer_name, answer.helpful, (SELECT (array_agg(json_build_object('id', photo.id, 'url', photo.photo_url))) FROM photo WHERE answer.answer_id = photo.answer_id) AS photos FROM answer WHERE answer.reported = false AND answer.question_id = ${questionID};`;
@@ -61,8 +61,8 @@ module.exports = {
   addQuestion(product_id, body, name, email) {
     return new Promise((resolve, reject) => {
       const dateWritten = Math.floor(new Date().getTime());
-      const queryStatement = 'INSERT INTO question (product_id, body, date_written, asker_name, asker_email, reported, helpfulness) VALUES (?, ?, ?, ?, ?, ?, ?);';
-      const queryArguments = [product_id, body, dateWritten, name, email, 0, 0];
+      const queryStatement = 'INSERT INTO question (product_id, body, date_written, asker_name, asker_email, reported, helpfulness) VALUES ($1, $2, $3, $4, $5, $6, $7);';
+      const queryArguments = [product_id, body, dateWritten, name, email, false, 0];
       pool.query(queryStatement, queryArguments, (err, results) => {
         if (err) {
           reject(err);
@@ -75,10 +75,11 @@ module.exports = {
   addAnswer(question_id, body, name, email) {
     return new Promise((resolve, reject) => {
       const dateWritten = Math.floor(new Date().getTime());
-      const queryStatement = 'INSERT INTO answer(question_id, body, date_written, answerer_name, answerer_email, reported, helpful) VALUES (?, ?, ?, ?, ?, ?, ?);';
-      const queryArguments = [question_id, body, dateWritten, name, email, false, 0];
+      const queryStatement = 'INSERT INTO answer(question_id, body, date_written, answerer_name, answerer_email, reported, helpful) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+      const queryArguments = [question_id, body, dateWritten.toString(), name, email, false, 0];
       pool.query(queryStatement, queryArguments, (err, results) => {
         if (err) {
+          console.log(err)
           reject(err);
         }
         resolve(results);
@@ -117,7 +118,6 @@ module.exports = {
         if (err) {
           reject(err);
         }
-
         resolve(results);
       });
     });
