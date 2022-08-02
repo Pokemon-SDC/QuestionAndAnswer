@@ -14,6 +14,6 @@ export const options = {
 };
 
 export default () => {
-  http.put('http://localhost:3000/qa/questions/900/helpful');
+  http.put('http://localhost:3000/qa/questions/9000/helpful');
   sleep(1);
 };
