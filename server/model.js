@@ -30,11 +30,9 @@ module.exports = {
         }
         data.results = rowData.rows;
 
-        console.log(rowData.rows);
-
         data.results.forEach((point) => {
-          // eslint-disable-next-line no-restricted-syntax
           point.date_written = new Date(Number(point.date_written)).toISOString();
+          // eslint-disable-next-line no-restricted-syntax
           for (var key in point.answers) {
             point.answers[key].date = new Date(Number(point.answers[key].date)).toISOString();
             if (point.answers[key].photos === null) {
@@ -66,6 +64,12 @@ module.exports = {
           reject(err);
         }
         data.results = rowData.rows;
+
+        for (let i = 0; i < rowData.rows.length; i++) {
+          // eslint-disable-next-line max-len
+          rowData.rows[i].date_written = new Date(Number(rowData.rows[i].date_written)).toISOString();
+        }
+
         resolve(data);
       });
     });
@@ -92,7 +96,6 @@ module.exports = {
       const queryArguments = [question_id, body, dateWritten, name, email, false, 0];
       pool.query(queryStatement, queryArguments, (err, results) => {
         if (err) {
-          console.log(err)
           reject(err);
         }
         resolve(results);
