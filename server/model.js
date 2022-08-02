@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 /* eslint-disable camelcase */
 /* eslint-disable import/extensions */
 const pool = require('../pool.js');
@@ -28,10 +29,14 @@ module.exports = {
           reject(err);
         }
         data.results = rowData.rows;
-        console.log (rowData.rows[0], '-----')
+
+        console.log(rowData.rows);
 
         data.results.forEach((point) => {
+          // eslint-disable-next-line no-restricted-syntax
+          point.date_written = new Date(Number(point.date_written)).toISOString();
           for (var key in point.answers) {
+            point.answers[key].date = new Date(Number(point.answers[key].date)).toISOString();
             if (point.answers[key].photos === null) {
               point.answers[key].photos = [];
             }
@@ -84,7 +89,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const dateWritten = Math.floor(new Date().getTime());
       const queryStatement = 'INSERT INTO answer(question_id, body, date_written, answerer_name, answerer_email, reported, helpful) VALUES ($1, $2, $3, $4, $5, $6, $7)';
-      const queryArguments = [question_id, body, dateWritten.toString(), name, email, false, 0];
+      const queryArguments = [question_id, body, dateWritten, name, email, false, 0];
       pool.query(queryStatement, queryArguments, (err, results) => {
         if (err) {
           console.log(err)
