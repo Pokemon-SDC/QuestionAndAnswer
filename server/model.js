@@ -11,7 +11,7 @@ module.exports = {
       const offset = (pageNumber - 1) * countNumber;
 
       const data = {
-        product_id: productID,
+        product_id: productID.toString(),
         results: [],
       };
 
@@ -28,6 +28,14 @@ module.exports = {
           reject(err);
         }
         data.results = rowData.rows;
+        console.log (rowData.rows[0], '-----')
+
+        data.results.forEach((point) => {
+          for (var key in point.answers) {
+            if (point.answers[key].photos === null) {
+              point.answers[key].photos = [];
+            }
+          }});
         resolve(data);
       });
     });
