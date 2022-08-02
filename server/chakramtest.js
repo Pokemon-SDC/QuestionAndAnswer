@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable no-undef */
 const chakram = require('chakram');
 
@@ -20,7 +21,7 @@ describe('Status Response of PUT HTTP Requests', () => {
   });
 });
 
-describe ('Status Response of GET Answers HTTP Requests', () => {
+describe('Status Response of GET Answers HTTP Requests', () => {
   it('should report 200 status with successful GET HTTP requests', () => {
     const response = chakram.get('http://localhost:3000/qa/questions/9000/answers');
     return expect(response).to.have.status(200);
@@ -31,20 +32,35 @@ describe ('Status Response of GET Answers HTTP Requests', () => {
   });
 });
 
-describe ('Status Response of GET Questions HTTP Requests', () => {
+describe('Response of GET Questions HTTP Requests', () => {
   it('should report 200 status with successful GET HTTP requests', () => {
     const response = chakram.get('http://localhost:3000/qa/questions/?product_id=900');
     return expect(response).to.have.status(200);
   });
   it('should report the appropiate product_id number in the body of response', () => {
     return chakram.get('http://localhost:3000/qa/questions/?product_id=900')
-      .then((object) => {
-        console.log(object)
-        return expect(object.body).to.include({product_id: '900'});
-      })
+      .then((object) => expect(object.body).to.include({ product_id: '900' }));
+  });
+  it('should return an object', () => {
+    return chakram.get('http://localhost:3000/qa/questions/?product_id=900')
+      .then((object) => expect(object.body).to.be.an('object'));
   });
   it('should not report 200 status with successful GET HTTP requests with invalid URL path', () => {
     const response = chakram.get('http://localhost:3000/qa/questions/900');
     return expect(response).to.not.have.status(200);
   });
+});
+
+describe('Testing How To Insert Params into Chakram', () => {
+  it('should be able to accept body params', () => {
+    return chakram.post('http://localhost:3000/qa/questions/', {
+      body: 'this is a test',
+      name: 'brandon',
+      email: '@gmail.com',
+      product_id: 300,
+    })
+      .then((object) => {
+        const bodyParams = JSON.parse(object.response.request.body);
+        return expect(bodyParams.body).to.equal('this is a test');
+      })});
 });
