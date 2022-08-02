@@ -63,6 +63,7 @@ module.exports = {
         if (err) {
           reject(err);
         }
+
         data.results = rowData.rows;
 
         for (let i = 0; i < rowData.rows.length; i++) {

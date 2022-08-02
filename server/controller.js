@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 /* eslint-disable import/extensions */
