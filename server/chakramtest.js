@@ -62,5 +62,6 @@ describe('Testing How To Insert Params into Chakram', () => {
       .then((object) => {
         const bodyParams = JSON.parse(object.response.request.body);
         return expect(bodyParams.body).to.equal('this is a test');
-      })});
+      });
+  });
 });
