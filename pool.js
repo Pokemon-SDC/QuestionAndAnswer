@@ -9,8 +9,6 @@ const credentials = {
   port: process.env.DB_PORT,
 };
 
-console.log (process.env.DB_DATABASE, 'db name');
-
 // const credentials = {
 //   user: 'brandonhsu',
 //   host: 'localhost',
