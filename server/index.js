@@ -1,9 +1,11 @@
 /* eslint-disable import/extensions */
+require('dotenv').config();
 const express = require('express');
 const bodyparser = require('body-parser');
 const controller = require('./controller.js');
 
-const port = 3000;
+// const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 // app.use(express.static('/../client/dist'));
