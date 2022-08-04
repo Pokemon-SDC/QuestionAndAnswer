@@ -7,6 +7,8 @@ const credentials = {
   database: process.env.DB_DATABASE,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
+  connectionTimeoutMillis: 0,
+  idleTimeoutMillis: 0,
 };
 
 const pool = new Pool(credentials);
