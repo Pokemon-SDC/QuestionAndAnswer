@@ -36,7 +36,6 @@ CREATE INDEX question_product_id_idx ON "question" (product_id);
 CREATE INDEX question_helpfulness_idx ON "question" (helpfulness);
 CREATE INDEX question_reported_idx ON "question" (reported);
 
-
 CREATE INDEX answer_answer_id_idx ON "answer" (answer_id);
 CREATE INDEX answer_helpful_idx ON "answer" (helpful);
 CREATE INDEX answer_reported_idx ON "answer" (reported);
