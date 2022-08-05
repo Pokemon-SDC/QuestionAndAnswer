@@ -12,7 +12,9 @@ module.exports = {
         res.status(200);
         res.send(results);
       })
-      .catch((err) => { res.status(500); });
+      .catch((err) => {
+        res.status(500);
+      });
   },
 
   getAnswers(req, res) {

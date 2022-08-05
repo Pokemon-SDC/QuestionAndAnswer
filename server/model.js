@@ -26,7 +26,7 @@ module.exports = {
 
       pool.query(queryStatement, (err, rowData) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         data.results = rowData.rows;
 
@@ -61,7 +61,7 @@ module.exports = {
       const queryStatement = `SELECT answer.answer_id, answer.body, answer.date_written, answer.answerer_name, answer.helpful, (SELECT (array_agg(json_build_object('id', photo.id, 'url', photo.photo_url))) FROM photo WHERE answer.answer_id = photo.answer_id) AS photos FROM answer WHERE answer.reported = false AND answer.question_id = ${questionID};`;
       pool.query(queryStatement, (err, rowData) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
 
         data.results = rowData.rows;
@@ -83,7 +83,7 @@ module.exports = {
       const queryArguments = [product_id, body, dateWritten, name, email, false, 0];
       pool.query(queryStatement, queryArguments, (err, results) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         resolve(results);
       });
@@ -99,7 +99,7 @@ module.exports = {
         if (err) {
           reject(err);
         }
-        resolve(results);
+        return resolve(results);
       });
     });
   },
@@ -109,7 +109,7 @@ module.exports = {
       const queryStatement = `Update question SET helpfulness = helpfulness + 1 WHERE id = ${question_id};`;
       pool.query(queryStatement, (err, results) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         resolve(results);
       });
@@ -121,7 +121,7 @@ module.exports = {
       const queryStatement = `Update answer SET helpful = helpful + 1 WHERE answer_id = ${answer_id};`;
       pool.query(queryStatement, (err, results) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         resolve(results);
       });
@@ -133,7 +133,7 @@ module.exports = {
       const queryStatement = `UPDATE question SET reported = true WHERE id = ${question_id};`;
       pool.query(queryStatement, (err, results) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         resolve(results);
       });
@@ -145,7 +145,7 @@ module.exports = {
       const queryStatement = `UPDATE answer SET reported = true WHERE answer_id = ${answer_id};`;
       pool.query(queryStatement, (err, results) => {
         if (err) {
-          reject(err);
+          return reject(err);
         }
         resolve(results);
       });
