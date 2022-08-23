@@ -1,8 +1,9 @@
-# QuestionAndAnswer
+# The Clapper API
 
 
 ## Goal
-Improve web scalability of an e-commerce website by transforming a monolithic back-end service to one with a service-oriented architecture. My task was to scale the Question and Answers component of the application.
+* Improve web scalability of an e-commerce website by transforming a monolithic back-end service to one with a service-oriented architecture. 
+* Focus on the application's Question and Answers component
 
 ## Technologies Used
 <div align="center" width="100%">
